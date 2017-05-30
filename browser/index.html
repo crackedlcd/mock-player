@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Player App</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="browser/css/sweetalert.css">
+</head>
+<body>
+  <div id="app" class="container">
+    <h1>Super Awesome Player Right Here</h1>
+    <div class="form-group form-inline" v-show="isLoaded === undefined">
+        <label>Username</label>
+      <input class="form-control" v-model="username" placeholder="Enter your username" key="username-input">
+      <button class="btn btn-default" v-on:click="loadPlaylist(username)">Enter username</button>      
+    </div>
+    <div></div>
+
+    <div v-show="isLoaded === false">
+      Loading...
+    </div>
+    <div v-show="isLoaded">
+      <div v-show="isAddSong">
+        <div class="form-group form-inline">
+          <label for="song-artist">Artist</label>
+          <input type="text" class="form-control" v-model="songToAdd.artist" key="artist-input">
+          <label for="song-title">Song Title</label>
+          <input type="text" class="form-control" v-model="songToAdd.title" key="title-input">
+          <button class="btn btn-default" name="add-song-modal" v-on:click="addSong()">Submit</button>
+        </div>
+      </div>
+      <table class="table">
+        <thead>
+          <td>Artist</td>
+          <td>Song Name</td>
+        </thead>
+        <tr v-for="(song, index) in songs" v-bind:class="{ info:isActiveSong(index) }">
+          <td>{{ song.artist }}</td>
+          <td>{{ song.title }}</td>
+        </tr>
+      </table>
+      <button class="btn btn-default" name="previous" v-on:click="previous()">Previous</button>
+      <button class="btn btn-default" name="play" v-on:click="play()">Play a song</button>
+      <button class="btn btn-default" name="next" v-on:click="next()">Next</button>
+      <button class="btn btn-default" name="add-song" v-on:click="triggerAddSong()">Add Song</button>
+      <button class="btn btn-default" name="shuffle" v-model="shuffleState" v-on:click="shuffle()">{{ shuffleState ? "Shuffle: ON" : "Shuffle: OFF" }}</button>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="browser/js/vue.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="browser/js/sweetalert.min.js"></script>
+  <script src="browser/js/app.js"></script>
+</body>
+</html>
